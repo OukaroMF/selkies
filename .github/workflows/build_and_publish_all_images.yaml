@@ -36,11 +36,20 @@ jobs:
       run: echo "REPO_LC=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
 
 
+    - name: Prepare build args
+      id: prepare_args
+      run: |
+        ARGS="${{ matrix.build_args }}"
+        ARGS="${ARGS//REPO_LC_PLACEHOLDER/${{ env.REPO_LC }}}"
+        echo "build_args<<EOF" >> $GITHUB_OUTPUT
+        echo "$ARGS" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
     - name: Build & publish ${{ matrix.name }} image
       uses: ./.github/actions/build_and_publish_image
       with:
         prefix: ${{ env.REPO_LC }}
-        build_args: ${{ matrix.build_args }}
+        build_args: ${{ steps.prepare_args.outputs.build_args }}
         context: ${{ matrix.context }}
         dockerfile: ${{ matrix.dockerfile }}
         platforms: ${{ matrix.platforms }}
@@ -141,11 +150,20 @@ jobs:
       run: echo "REPO_LC=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
 
 
+    - name: Prepare build args
+      id: prepare_args
+      run: |
+        ARGS="${{ matrix.build_args }}"
+        ARGS="${ARGS//REPO_LC_PLACEHOLDER/${{ env.REPO_LC }}}"
+        echo "build_args<<EOF" >> $GITHUB_OUTPUT
+        echo "$ARGS" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
     - name: Build & publish ${{ matrix.name }} image
       uses: ./.github/actions/build_and_publish_image
       with:
         prefix: ${{ env.REPO_LC }}
-        build_args: ${{ matrix.build_args }}
+        build_args: ${{ steps.prepare_args.outputs.build_args }}
         context: ${{ matrix.context }}
         dockerfile: ${{ matrix.dockerfile }}
         platforms: ${{ matrix.platforms }}
@@ -170,10 +188,10 @@ jobs:
             DISTRIB_IMAGE=ubuntu
             DISTRIB_RELEASE=20.04
             GSTREAMER_BASE_IMAGE_RELEASE=${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
-            PY_BUILD_IMAGE=ghcr.io/${{ env.REPO_LC }}/py-build:${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
-            WEB_IMAGE=ghcr.io/${{ env.REPO_LC }}/gst-web:${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
+            PY_BUILD_IMAGE=ghcr.io/REPO_LC_PLACEHOLDER/py-build:${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
+            WEB_IMAGE=ghcr.io/REPO_LC_PLACEHOLDER/gst-web:${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
             JS_BASE_IMAGE_RELEASE=${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
-            JS_BASE_IMAGE=ghcr.io/${{ env.REPO_LC }}/js-interposer
+            JS_BASE_IMAGE=ghcr.io/REPO_LC_PLACEHOLDER/js-interposer
           context: addons/example
 
         - name: gst-py-example
@@ -183,10 +201,10 @@ jobs:
             DISTRIB_IMAGE=ubuntu
             DISTRIB_RELEASE=22.04
             GSTREAMER_BASE_IMAGE_RELEASE=${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
-            PY_BUILD_IMAGE=ghcr.io/${{ env.REPO_LC }}/py-build:${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
-            WEB_IMAGE=ghcr.io/${{ env.REPO_LC }}/gst-web:${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
+            PY_BUILD_IMAGE=ghcr.io/REPO_LC_PLACEHOLDER/py-build:${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
+            WEB_IMAGE=ghcr.io/REPO_LC_PLACEHOLDER/gst-web:${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
             JS_BASE_IMAGE_RELEASE=${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
-            JS_BASE_IMAGE=ghcr.io/${{ env.REPO_LC }}/js-interposer
+            JS_BASE_IMAGE=ghcr.io/REPO_LC_PLACEHOLDER/js-interposer
           context: addons/example
 
         - name: gst-py-example
@@ -196,10 +214,10 @@ jobs:
             DISTRIB_IMAGE=ubuntu
             DISTRIB_RELEASE=24.04
             GSTREAMER_BASE_IMAGE_RELEASE=${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
-            PY_BUILD_IMAGE=ghcr.io/${{ env.REPO_LC }}/py-build:${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
-            WEB_IMAGE=ghcr.io/${{ env.REPO_LC }}/gst-web:${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
+            PY_BUILD_IMAGE=ghcr.io/REPO_LC_PLACEHOLDER/py-build:${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
+            WEB_IMAGE=ghcr.io/REPO_LC_PLACEHOLDER/gst-web:${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
             JS_BASE_IMAGE_RELEASE=${{ github.event_name != 'pull_request' && github.ref_name || 'main' }}
-            JS_BASE_IMAGE=ghcr.io/${{ env.REPO_LC }}/js-interposer
+            JS_BASE_IMAGE=ghcr.io/REPO_LC_PLACEHOLDER/js-interposer
           context: addons/example
 
     name: ${{ matrix.name }}${{ matrix.version_suffix }} image build & publish
@@ -209,11 +227,20 @@ jobs:
       run: echo "REPO_LC=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
 
 
+    - name: Prepare build args
+      id: prepare_args
+      run: |
+        ARGS="${{ matrix.build_args }}"
+        ARGS="${ARGS//REPO_LC_PLACEHOLDER/${{ env.REPO_LC }}}"
+        echo "build_args<<EOF" >> $GITHUB_OUTPUT
+        echo "$ARGS" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
     - name: Build & publish ${{ matrix.name }} image
       uses: ./.github/actions/build_and_publish_image
       with:
         prefix: ${{ env.REPO_LC }}
-        build_args: ${{ matrix.build_args }}
+        build_args: ${{ steps.prepare_args.outputs.build_args }}
         context: ${{ matrix.context }}
         dockerfile: ${{ matrix.dockerfile }}
         platforms: ${{ matrix.platforms }}
