@@ -39,6 +39,7 @@ jobs:
     - name: Build & publish ${{ matrix.name }} image
       uses: ./.github/actions/build_and_publish_image
       with:
+        prefix: ${{ env.REPO_LC }}
         build_args: ${{ matrix.build_args }}
         context: ${{ matrix.context }}
         dockerfile: ${{ matrix.dockerfile }}
@@ -143,6 +144,7 @@ jobs:
     - name: Build & publish ${{ matrix.name }} image
       uses: ./.github/actions/build_and_publish_image
       with:
+        prefix: ${{ env.REPO_LC }}
         build_args: ${{ matrix.build_args }}
         context: ${{ matrix.context }}
         dockerfile: ${{ matrix.dockerfile }}
@@ -210,6 +212,7 @@ jobs:
     - name: Build & publish ${{ matrix.name }} image
       uses: ./.github/actions/build_and_publish_image
       with:
+        prefix: ${{ env.REPO_LC }}
         build_args: ${{ matrix.build_args }}
         context: ${{ matrix.context }}
         dockerfile: ${{ matrix.dockerfile }}
